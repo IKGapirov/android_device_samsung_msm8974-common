@@ -1,5 +1,6 @@
 # Copyright (C) 2012 The CyanogenMod Project
-# Copyright (C) 2017-2018 The LineageOS Project
+# Copyright (C) 2017-2019 The LineageOS Project
+# Copyright (C) 2020 AospExtended Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,14 +15,15 @@
 # limitations under the License.
 
 # inherit from qcom-common
--include device/samsung/qcom-common/BoardConfigCommon.mk
+include device/samsung/qcom-common/BoardConfigCommon.mk
 
 # Platform
 TARGET_BOARD_PLATFORM := msm8974
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno330
 
 # Architecture
-TARGET_CPU_VARIANT := krait
+TARGET_CPU_VARIANT := generic
+TARGET_CPU_VARIANT_RUNTIME := krait
 
 # Audio
 AUDIO_FEATURE_ENABLED_COMPRESS_VOIP := true
@@ -47,9 +49,6 @@ BOARD_CHARGING_CMDLINE_NAME := "androidboot.bootchg"
 BOARD_CHARGING_CMDLINE_VALUE := "true"
 WITH_LINEAGE_CHARGER := false
 
-# CMHW
-BOARD_HARDWARE_CLASS += device/samsung/msm8974-common/lineagehw
-
 # Dexpreopt
 ifeq ($(HOST_OS),linux)
   ifneq ($(TARGET_BUILD_VARIANT),eng)
@@ -60,7 +59,7 @@ endif
 
 # Display
 OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
-TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x02000000U
+TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x2000U | 0x02000000U
 
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
@@ -82,20 +81,17 @@ DEVICE_MATRIX_FILE := device/samsung/msm8974-common/compatibility_matrix.xml
 # SELinux
 include device/samsung/msm8974-common/sepolicy/sepolicy.mk
 
-# Init
-TARGET_INIT_VENDOR_LIB := libinit_msm8974
-TARGET_RECOVERY_DEVICE_MODULES := libinit_msm8974
-
 # Netd
 TARGET_NEEDS_NETD_DIRECT_CONNECT_RULE := true
 
 # Power
-TARGET_HAS_LEGACY_POWER_STATS := true
-TARGET_HAS_NO_WLAN_STATS := true
 TARGET_USES_INTERACTION_BOOST := true
 
 # Properties
 TARGET_SYSTEM_PROP += device/samsung/msm8974-common/system.prop
+
+# Recovery
+TARGET_RECOVERY_DEVICE_DIRS += device/samsung/msm8974-common
 
 # Time services
 BOARD_USES_QC_TIME_SERVICES := true

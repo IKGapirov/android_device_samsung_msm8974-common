@@ -1,5 +1,6 @@
 # Copyright (C) 2012 The CyanogenMod Project
-# Copyright (C) 2017-2018 The LineageOS Project
+# Copyright (C) 2017-2020 The LineageOS Project
+# Copyright (C) 2020 AospExtended Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +17,7 @@
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
     device/samsung/msm8974-common/overlay \
-    device/samsung/msm8974-common/overlay-lineage
+    device/samsung/msm8974-common/overlay-aosp
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -37,36 +38,10 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml
 
-# System properties
-PRODUCT_PROPERTY_OVERRIDES += \
-    audio.offload.buffer.size.kb=32 \
-    audio.offload.gapless.enabled=false \
-    av.offload.enable=true
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.opengles.version=196608
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.rild.nitz_plmn="" \
-    persist.rild.nitz_long_ons_0="" \
-    persist.rild.nitz_long_ons_1="" \
-    persist.rild.nitz_long_ons_2="" \
-    persist.rild.nitz_long_ons_3="" \
-    persist.rild.nitz_short_ons_0="" \
-    persist.rild.nitz_short_ons_1="" \
-    persist.rild.nitz_short_ons_2="" \
-    persist.rild.nitz_short_ons_3=""
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.timed.enable=true
-
-# Advanced Display
-PRODUCT_PACKAGES += \
-    AdvancedDisplay
-
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
+    android.hardware.audio@2.0-service \
     android.hardware.audio.effect@2.0-impl \
     audio_policy.msm8974 \
     audio.a2dp.default \
@@ -82,6 +57,7 @@ PRODUCT_PACKAGES += \
 # Bluetooth
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0-impl \
+    android.hardware.bluetooth@1.0-service \
     libbt-vendor
 
 # Boot animation
@@ -92,8 +68,9 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.composer@2.1-impl \
-    android.hardware.graphics.mapper@2.0-impl \
+    android.hardware.graphics.mapper@2.0-impl-2.1 \
     android.hardware.memtrack@1.0-impl \
+    android.hardware.memtrack@1.0-service \
     copybit.msm8974 \
     gralloc.msm8974 \
     hwcomposer.msm8974 \
@@ -118,6 +95,7 @@ PRODUCT_PACKAGES += \
 # GPS
 PRODUCT_PACKAGES += \
     android.hardware.gnss@1.0-impl \
+    android.hardware.gnss@1.0-service \
     gps.msm8974
 
 PRODUCT_COPY_FILES += \
@@ -128,18 +106,16 @@ PRODUCT_COPY_FILES += \
 
 # IR Blaster
 PRODUCT_PACKAGES += \
-    android.hardware.ir@1.0-impl \
-    consumerir.msm8974
+    android.hardware.ir@1.0-service.samsung
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
-    device/samsung/msm8974-common/keylayout/cyttsp-i2c.kl:system/usr/keylayout/cyttsp-i2c.kl \
-    device/samsung/msm8974-common/keylayout/keypad_8960.kl:system/usr/keylayout/keypad_8960.kl \
     device/samsung/msm8974-common/keylayout/Vendor_04e8_Product_7021.kl:system/usr/keylayout/Vendor_04e8_Product_7021.kl
 
 # Keymaster
 PRODUCT_PACKAGES += \
-    android.hardware.keymaster@3.0-impl
+    android.hardware.keymaster@3.0-impl \
+    android.hardware.keymaster@3.0-service
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -162,7 +138,7 @@ PRODUCT_PACKAGES += \
 
 # Power HAL
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.1-service-qti
+    android.hardware.power@1.2-service-qti
 
 # RenderScript HAL
 PRODUCT_PACKAGES += \
@@ -178,17 +154,13 @@ PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl.samsung8974 \
     android.hardware.sensors@1.0-service.samsung8974
 
-# Trust HAL
-PRODUCT_PACKAGES += \
-    vendor.lineage.trust@1.0-service
-
 # USB
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service.basic
 
 # Wifi
 PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0-service \
+    android.hardware.wifi@1.0-service.legacy \
     hostapd \
     wificond \
     wpa_supplicant \
